@@ -7,7 +7,7 @@ import { FindMusicDto } from './dto/find-music.dto';
 import axios from 'axios';
 import Response from 'src/utils/Response';
 import downLoadMusic from 'src/utils/downLoadMusic';
-import { post, musicFileStaticRoot, domainName } from 'src/config';
+import { port, musicFileStaticRoot, domainName } from 'src/config';
 
 
 @Injectable()
@@ -90,7 +90,7 @@ export class MusicService {
             artists: song.ar.map((i: { id: number, name: string }) => ({ id: i.id, name: i.name })),
             duration: song.dt,
             lyric: musicLyric.data.lrc.lyric,
-            url: process.env.NODE_ENV === 'production' ? `${domainName}${musicFileStaticRoot}/${fileName}` : `http://127.0.0.1:${post}${musicFileStaticRoot}/${fileName}`
+            url: process.env.NODE_ENV === 'production' ? `${domainName}${musicFileStaticRoot}/${fileName}` : `http://127.0.0.1:${port}${musicFileStaticRoot}/${fileName}`
         }
 
         await this.musicModel.create(newMusic)

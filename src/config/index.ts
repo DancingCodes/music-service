@@ -1,4 +1,4 @@
-export const post = 3002
+export const port = 3002
 
 export const mongodb = 'mongodb://localhost:27017/nest'
 
