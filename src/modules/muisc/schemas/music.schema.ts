@@ -1,9 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema()
-export class Music extends Document {
-    @Prop({ required: true })
+export type MusicDocument = Music & Document;
+
+@Schema({ timestamps: true })
+export class Music {
+    @Prop({ required: true, unique: true })
     id: number;
 
     @Prop({ required: true })
@@ -12,7 +14,16 @@ export class Music extends Document {
     @Prop({ required: true })
     picUrl: string;
 
-    @Prop({ required: true })
+    @Prop({
+        required: true,
+        type: [
+            {
+                _id: false,
+                id: Number,
+                name: String,
+            },
+        ],
+    })
     artists: { id: number; name: string }[];
 
     @Prop({ required: true })

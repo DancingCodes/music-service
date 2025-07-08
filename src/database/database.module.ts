@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
-// use Music
-// db.createUser({
-//     user: "Music",
-//     pwd: "DancingCodes1227",
-//     roles: [{ role: "readWrite", db: "Music" }]
-// })
 @Module({
     imports: [
-        MongooseModule.forRoot('mongodb://Music:DancingCodes1227@127.0.0.1:27017/Music'),
+        ConfigModule,
+        MongooseModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => ({
+                uri: configService.get('MONGODB_URI'),
+            }),
+            inject: [ConfigService],
+        }),
     ],
     exports: [MongooseModule],
 })
