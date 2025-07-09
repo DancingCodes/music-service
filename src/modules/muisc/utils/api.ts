@@ -33,6 +33,6 @@ export async function fetchMusicUrl(id: number, Cookie: string) {
 
 export async function fetchWyMusicList(name: string, pageNo: number, pageSize: number) {
     const { data } = await axios.post(`https://music.163.com/api/search/get/web?s=${name}&type=1&offset=${(pageNo - 1) * pageSize}&limit=${pageSize}`)
-    const { songs: list, songCount: total } = data.result
+    const { songs: list = [], songCount: total = 0 } = data.result
     return { list, total }
 }
